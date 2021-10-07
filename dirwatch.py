@@ -1,4 +1,5 @@
 import configparser
+from posixpath import split
 from watchdog.events import FileSystemEventHandler
 from watchdog.events import LoggingEventHandler
 from watchdog.observers.api import EventQueue
@@ -55,37 +56,53 @@ if __name__ == "__main__":
                         action = splitted_file_path[3]
                         # Check if the 3rd folder is hash_generation
                         if action == "hash_generation":
+                            # Read the hash value from the shared folder
                             with open(file_path, "r") as f:
                                 hash_values = f.read()
+                            # Write the hash value to another folder
                             with open("hash/hashes.txt", "a+") as t:
                                 t.write(hash_values + "\n")
 
                             print("Removing " + str(file_path))
+                            # Remove the file in the shared folder
                             remove(file_path)
                         # Check if the 3rd folder is verify_hash
                         elif action == "verify_hash":
-                            received_file_name = splitted_file_path[5]
-                            print("Verify hash...")
-                            if received_file_name == "dummy.txt":
-                                print("i need to retrieve hash file")
-                                with open(file_path, "r") as read_dummy_file:
-                                    retrieve_hash_file_name = read_dummy_file.read()
-                                print("The file name to retrieve hash: ", retrieve_hash_file_name)
-                                remove(file_path)
-                                with open("hash/hashes.txt", "r") as read_hashes:
-                                    next(read_hashes)
-                                    for contents in read_hashes:
-                                        print("[DIRWATCH] All contents in file: ", contents)
-                                        hashes, file_name = contents.strip().split("|",1)
-                                        if retrieve_hash_file_name == file_name:
-                                            print("[DIRWATCH] File name found in: ", contents)
-                                            with open(file_processing + "/verify_hash/return_hash/hash.txt", "w+") as wf:
-                                                wf.write(hashes)
-                            elif received_file_name == "hashes.txt":
-                                print("do nothing")
+                            print("[DIRWATCH] Verify hash...")
+                            sub_action = splitted_file_path[4]
+                            # Check if it is requesting hash
+                            if sub_action == "request_hash":
+                                print("[DIRWATCH] Requesting for hash!")
+                                # Get the pre-defined filename storing the file_name to hash
+                                received_file_name = splitted_file_path[5]
+                                if received_file_name == "dummy.txt":
+                                    print("i need to retrieve hash file")
+                                    # Open the file and store the file_name inside the file
+                                    with open(file_path, "r") as read_dummy_file:
+                                        retrieve_hash_file_name = read_dummy_file.read()
+                                    print("The file name to retrieve hash: ", retrieve_hash_file_name)
+                                    # Remove the file away
+                                    remove(file_path)
+                                    # Open and read the file storing all hashes
+                                    with open("hash/hashes.txt", "r") as read_hashes:
+                                        next(read_hashes)
+                                        # Check if the file_name obtained is inside the hash file
+                                        for contents in read_hashes:
+                                            print("[DIRWATCH] All contents in file: ", contents)
+                                            hashes, file_name = contents.strip().split("|",1)
+                                            if retrieve_hash_file_name == file_name:
+                                                print("[DIRWATCH] File name found in: ", contents)
+                                                with open(file_processing + "/verify_hash/return_hash/hash.txt", "w+") as wf:
+                                                    wf.write(hashes)
+                                                break
+                                else:
+                                    print("[DIRWATCH] The received file name is no correct!")
+                            elif sub_action == "return_hash":
+                                print("[DIRWATCH] Returning hash. Nothing to do")
                                 pass
                             else:
-                                print("lala")
+                                print("[DIRWATCH] Unknown sub action!")
+                                pass
 
 
     except KeyboardInterrupt:
