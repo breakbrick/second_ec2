@@ -72,7 +72,7 @@ if __name__ == "__main__":
                                     retrieve_hash_file_name = read_dummy_file.read()
                                 print("The file name to retrieve hash: ", retrieve_hash_file_name)
                                 remove(file_path)
-                                with open("/hash/hashes.txt", "r") as read_hashes:
+                                with open("hash/hashes.txt", "r") as read_hashes:
                                     next(read_hashes)
                                     for contents in read_hashes:
                                         print("[DIRWATCH] All contents in file: ", contents)
