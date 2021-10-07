@@ -53,7 +53,6 @@ if __name__ == "__main__":
                         print("opps")
                     else:
                         action = splitted_file_path[3]
-                        received_file_name = splitted_file_path[5]
                         # Check if the 3rd folder is hash_generation
                         if action == "hash_generation":
                             with open(file_path, "r") as f:
@@ -65,6 +64,7 @@ if __name__ == "__main__":
                             remove(file_path)
                         # Check if the 3rd folder is verify_hash
                         elif action == "verify_hash":
+                            received_file_name = splitted_file_path[5]
                             print("Verify hash...")
                             if received_file_name == "dummy.txt":
                                 print("i need to retrieve hash file")
