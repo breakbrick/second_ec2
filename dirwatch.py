@@ -57,7 +57,7 @@ if __name__ == "__main__":
                         if action == "hash_generation":
                             with open(file_path, "r") as f:
                                 hash_values = f.read()
-                            with open("/hash/hashes.txt", "a+") as t:
+                            with open("hash/hashes.txt", "a+") as t:
                                 t.write(hash_values + "\n")
 
                             print("Removing " + str(file_path))
