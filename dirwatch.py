@@ -79,7 +79,7 @@ if __name__ == "__main__":
                                         hashes, file_name = contents.strip().split("|",1)
                                         if retrieve_hash_file_name == file_name:
                                             print("[DIRWATCH] File name found in: ", contents)
-                                            with open(file_processing + "/verify_hash/hash.txt", "w+") as wf:
+                                            with open(file_processing + "/verify_hash/return_hash/hash.txt", "w+") as wf:
                                                 wf.write(hashes)
                             elif received_file_name == "hashes.txt":
                                 print("do nothing")
