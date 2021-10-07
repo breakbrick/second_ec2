@@ -46,12 +46,6 @@ if __name__ == "__main__":
                 if stat(file_path).st_size == 0:
                     print("[DIRWATCH] Empty file detected!")
                 else:
-                    # Obtain the client name, which is the last folder
-                    # client_name = basename(dirname(file_path))
-                    # print("[DIRWATCH] Client name: ", client_name)
-
-                    # file_name = basename(normpath(file_path))
-                    # print("[DIRWATCH] File name: ", file_name)
 
                     splitted_file_path = file_path.split("/")
                     print(splitted_file_path)
@@ -64,7 +58,7 @@ if __name__ == "__main__":
                         if action == "hash_generation":
                             with open(file_path, "r") as f:
                                 hash_values = f.read()
-                            with open("/home/matthewtanzs/hash/hashes.txt", "a+") as t:
+                            with open("/hash/hashes.txt", "a+") as t:
                                 t.write(hash_values + "\n")
 
                             print("Removing " + str(file_path))
@@ -77,7 +71,7 @@ if __name__ == "__main__":
                                     retrieve_hash_file_name = read_dummy_file.read()
                                 print("The file name to retrieve hash: ", retrieve_hash_file_name)
                                 remove(file_path)
-                                with open("/home/matthewtanzs/hash/hashes.txt", "r") as read_hashes:
+                                with open("/hash/hashes.txt", "r") as read_hashes:
                                     next(read_hashes)
                                     for contents in read_hashes:
                                         print("[DIRWATCH] All contents in file: ", contents)
