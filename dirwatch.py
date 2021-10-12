@@ -68,19 +68,19 @@ if __name__ == "__main__":
                             remove(file_path)
                         # Check if the 3rd folder is verify_hash
                         elif action == "verify_hash":
-                            print("[DIRWATCH] Verify hash...")
+                            # print("[DIRWATCH] Verify hash...")
                             sub_action = splitted_file_path[4]
                             # Check if it is requesting hash
                             if sub_action == "request_hash":
-                                print("[DIRWATCH] Requesting for hash!")
+                                # print("[DIRWATCH] Requesting for hash!")
                                 # Get the pre-defined filename storing the file_name to hash
                                 received_file_name = splitted_file_path[5]
                                 if received_file_name == "dummy.txt":
-                                    print("i need to retrieve hash file")
+                                    # print("i need to retrieve hash file")
                                     # Open the file and store the file_name inside the file
                                     with open(file_path, "r") as read_dummy_file:
                                         retrieve_hash_file_name = read_dummy_file.read()
-                                    print("The file name to retrieve hash: ", retrieve_hash_file_name)
+                                    # print("The file name to retrieve hash: ", retrieve_hash_file_name)
                                     # Remove the file away
                                     remove(file_path)
                                     # Open and read the file storing all hashes
