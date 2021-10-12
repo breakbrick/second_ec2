@@ -88,7 +88,7 @@ if __name__ == "__main__":
                                         next(read_hashes)
                                         # Check if the file_name obtained is inside the hash file
                                         for contents in read_hashes:
-                                            print("[DIRWATCH] All contents in file: ", contents)
+                                            # print("[DIRWATCH] All contents in file: ", contents)
                                             hashes, file_name = contents.strip().split("|",1)
                                             if retrieve_hash_file_name == file_name:
                                                 print("[DIRWATCH] File name found in: ", contents)
