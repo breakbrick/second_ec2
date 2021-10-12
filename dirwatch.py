@@ -39,16 +39,16 @@ if __name__ == "__main__":
     try:
         while True:
             while len(pending_queue) > 0:
-                print("\n[DIRWATCH] Pending queue: ", pending_queue)
+                # print("\n[DIRWATCH] Pending queue: ", pending_queue)
 
                 file_path = pending_queue.pop()
-                print("[DIRWATCH] File path: ", file_path)
+                # print("[DIRWATCH] File path: ", file_path)
 
                 if stat(file_path).st_size == 0:
                     print("[DIRWATCH] Empty file detected!")
                 else:
                     splitted_file_path = file_path.split("/")
-                    print(splitted_file_path)
+                    # print(splitted_file_path)
 
                     if len(splitted_file_path) < 0:
                         print("opps")
@@ -80,7 +80,7 @@ if __name__ == "__main__":
                                     # Open the file and store the file_name inside the file
                                     with open(file_path, "r") as read_dummy_file:
                                         retrieve_hash_file_name = read_dummy_file.read()
-                                    # print("The file name to retrieve hash: ", retrieve_hash_file_name)
+                                    print("[DIRWATCH] The file name to retrieve hash: ", retrieve_hash_file_name)
                                     # Remove the file away
                                     remove(file_path)
                                     # Open and read the file storing all hashes
@@ -91,7 +91,7 @@ if __name__ == "__main__":
                                             # print("[DIRWATCH] All contents in file: ", contents)
                                             hashes, file_name = contents.strip().split("|",1)
                                             if retrieve_hash_file_name == file_name:
-                                                print("[DIRWATCH] File name found in: ", contents)
+                                                print("[DIRWATCH] Hash of the file found: ", hashes)
                                                 with open(file_processing + "/verify_hash/return_hash/hash.txt", "w+") as wf:
                                                     wf.write(hashes)
                                                 break
