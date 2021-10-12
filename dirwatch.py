@@ -39,16 +39,16 @@ if __name__ == "__main__":
     try:
         while True:
             while len(pending_queue) > 0:
-                # print("\n[DIRWATCH] Pending queue: ", pending_queue)
+                print("\n[DIRWATCH] Pending queue: ", pending_queue)
 
                 file_path = pending_queue.pop()
-                # print("[DIRWATCH] File path: ", file_path)
+                print("[DIRWATCH] File path: ", file_path)
 
                 if stat(file_path).st_size == 0:
                     print("[DIRWATCH] Empty file detected!")
                 else:
                     splitted_file_path = file_path.split("/")
-                    # print(splitted_file_path)
+                    print(splitted_file_path)
 
                     if len(splitted_file_path) < 0:
                         print("opps")
