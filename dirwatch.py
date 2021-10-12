@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
     observer.start()
 
-    print("[DIRWATCH] Watching ", file_processing)
+    #print("[DIRWATCH] Watching ", file_processing)
 
     try:
         while True:
