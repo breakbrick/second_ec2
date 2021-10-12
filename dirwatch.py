@@ -75,7 +75,7 @@ if __name__ == "__main__":
                                 # print("[DIRWATCH] Requesting for hash!")
                                 # Get the pre-defined filename storing the file_name to hash
                                 received_file_name = splitted_file_path[5]
-                                if received_file_name == "dummy.txt":
+                                if received_file_name == "file_name.txt":
                                     # print("i need to retrieve hash file")
                                     # Open the file and store the file_name inside the file
                                     with open(file_path, "r") as read_dummy_file:
@@ -96,7 +96,7 @@ if __name__ == "__main__":
                                                     wf.write(hashes)
                                                 break
                                 else:
-                                    print("[DIRWATCH] The received file name is no correct!")
+                                    print("[DIRWATCH] The received file name is not correct!")
                             elif sub_action == "return_hash":
                                 print("[DIRWATCH] Returning hash. Nothing to do")
                                 pass
