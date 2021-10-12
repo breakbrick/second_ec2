@@ -56,6 +56,9 @@ if __name__ == "__main__":
                         action = splitted_file_path[3]
                         # Check if the 3rd folder is hash_generation
                         if action == "hash_generation":
+                            print("\n[DIRWATCH] Pending queue: ", pending_queue)
+                            print("[DIRWATCH] File path: ", file_path)
+                            print(splitted_file_path)
                             # Read the hash value from the shared folder
                             with open(file_path, "r") as f:
                                 hash_values = f.read()
