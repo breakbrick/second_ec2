@@ -11,6 +11,7 @@ from os.path import basename
 from os.path import normpath
 from os.path import dirname
 from pathlib import Path
+from time import sleep
 
 # Prepare file paths
 # path = Path(__file__).resolve().parent
@@ -34,11 +35,12 @@ if __name__ == "__main__":
 
     observer.start()
 
-    #print("[DIRWATCH] Watching ", file_processing)
+    print("[DIRWATCH] Watching ", file_processing)
 
     try:
         while True:
             while len(pending_queue) > 0:
+                sleep(3)
                 print("\n[DIRWATCH] Pending queue: ", pending_queue)
 
                 file_path = pending_queue.pop()
