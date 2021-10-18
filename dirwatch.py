@@ -96,6 +96,8 @@ if __name__ == "__main__":
                                                 with open(file_processing + "/verify_hash/return_hash/hash.txt", "w+") as wf:
                                                     wf.write(hashes)
                                                 break
+                                            else:
+                                                print("[DIRWATCH] Unable to find the hash value for file " + retrieve_hash_file_name)
                                 else:
                                     print("[DIRWATCH] The received file name is not correct!")
                             elif sub_action == "return_hash":
