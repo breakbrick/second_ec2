@@ -79,7 +79,7 @@ if __name__ == "__main__":
                                     # print("i need to retrieve hash file")
                                     # Open the file and store the file_name inside the file
                                     with open(file_path, "r") as read_dummy_file:
-                                        retrieve_hash_file_name = read_dummy_file.read()
+                                        retrieve_hash_file_name = read_dummy_file.read().rstrip()
                                     print("[DIRWATCH] The file name to retrieve hash: ", retrieve_hash_file_name)
                                     # Remove the file away
                                     print("[DIRWATCH] Removing the filename file...")
