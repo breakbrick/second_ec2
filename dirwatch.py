@@ -40,10 +40,9 @@ if __name__ == "__main__":
     try:
         while True:
             while len(pending_queue) > 0:
-                sleep(3)
                 print("\n[DIRWATCH] Pending queue: ", pending_queue)
 
-                file_path = pending_queue.pop()
+                file_path = pending_queue.pop(0)
                 print("[DIRWATCH] File path: ", file_path)
 
                 if stat(file_path).st_size == 0:
