@@ -42,7 +42,7 @@ class FileLoaderWatchdog(FileSystemEventHandler):
 
 
 def print_func(event):
-    time.sleep(5)
+    # time.sleep(5)
     now = datetime.datetime.now()
     print ("{0} -- Pulling {1} off the queue ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.src_path))
     splitted_file_path = event.src_path.split("/")
