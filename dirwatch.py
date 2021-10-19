@@ -36,14 +36,14 @@ class FileLoaderWatchdog(FileSystemEventHandler):
 
     def on_created(self, event):
         self.process(event)
-        now = datetime.datetime.utcnow()
+        now = datetime.datetime.now()
         #print(f"hey for {event.src_path}")
         print ("{0} -- event {1} off the queue ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.src_path))
 
 
 def print_func(event):
-    # time.sleep(5)
-    now = datetime.datetime.utcnow()
+    time.sleep(5)
+    now = datetime.datetime.now()
     print ("{0} -- Pulling {1} off the queue ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.src_path))
     splitted_file_path = event.src_path.split("/")
     action = splitted_file_path[3]
@@ -61,31 +61,37 @@ def print_func(event):
     # Check if the 3rd folder is verify_hash
     elif action == "verify_hash":
         print("[print func] splitted ", splitted_file_path)
-        # Get the pre-defined filename storing the file_name to hash
-        received_file_name = splitted_file_path[5]
-        # if received_file_name == "file_name.txt":
-            # print("i need to retrieve hash file")
-            # Open the file and store the file_name inside the file
-        with open(event.src_path, "r") as read_dummy_file:
-            retrieve_hash_file_name = read_dummy_file.read().rstrip()
-        print("[DIRWATCH] The file name to retrieve hash: ", retrieve_hash_file_name)
-        # Remove the file away
-        print("[DIRWATCH] Removing the filename file...")
-        remove(event.src_path)
-        # Open and read the file storing all hashes
-        with open("hash/hashes.txt", "r") as read_hashes:
-            next(read_hashes)
-            # Check if the file_name obtained is inside the hash file
-            for contents in read_hashes:
-                # print("[DIRWATCH] All contents in file: ", contents)
-                hashes, file_name = contents.strip().split("|",1)
-                if retrieve_hash_file_name == file_name:
-                    print("[DIRWATCH] Hash of the file found: ", hashes)
-                    with open(FILE_PROCESSING + "/verify_hash/return_hash/hash.txt", "w+") as wf:
-                        wf.write(hashes)
-                    break
-                else:
-                    print("[DIRWATCH] Unable to find the hash value for file " + retrieve_hash_file_name)
+        sub_action = splitted_file_path[4]
+        # Check if it is requesting hash
+        if sub_action == "request_hash":
+            # Get the pre-defined filename storing the file_name to hash
+            received_file_name = splitted_file_path[5]
+            # if received_file_name == "file_name.txt":
+                # print("i need to retrieve hash file")
+                # Open the file and store the file_name inside the file
+            with open(event.src_path, "r") as read_dummy_file:
+                retrieve_hash_file_name = read_dummy_file.read().rstrip()
+            print("[DIRWATCH] The file name to retrieve hash: ", retrieve_hash_file_name)
+            # Remove the file away
+            print("[DIRWATCH] Removing the filename file ...")
+            remove(event.src_path)
+            # Open and read the file storing all hashes
+            with open("hash/hashes.txt", "r") as read_hashes:
+                next(read_hashes)
+                # Check if the file_name obtained is inside the hash file
+                for contents in read_hashes:
+                    # print("[DIRWATCH] All contents in file: ", contents)
+                    hashes, file_name = contents.strip().split("|",1)
+                    if retrieve_hash_file_name == file_name:
+                        print("[DIRWATCH] Hash of the file found: ", hashes)
+                        print("[DIRWATCH] Writing the hash found to file ...")
+                        with open(FILE_PROCESSING + "/verify_hash/return_hash/hash.txt", "w+") as wf:
+                            wf.write(hashes)
+                        break
+                    else:
+                        print("[DIRWATCH] Unable to find the hash value for file " + retrieve_hash_file_name)
+        elif sub_action == "return_hash":
+            print("[DIRWATCH] Returning hash. Nothing to do!")
 
 def info(title):
     print(title)
