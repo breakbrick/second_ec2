@@ -83,7 +83,7 @@ def print_func(event):
                 if retrieve_hash_file_name == file_name:
                     print("[DIRWATCH] Hash of the file found: ", hashes)
                     print("[DIRWATCH] Writing the hash found to file ...")
-                    with open(FILE_PROCESSING + "/verify_hash/return_hash/hash.txt", "w+") as wf:
+                    with open(FILE_PROCESSING + "/return_hash/hash.txt", "w+") as wf:
                         wf.write(hashes)
                     break
                 else:
