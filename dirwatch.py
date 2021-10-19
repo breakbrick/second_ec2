@@ -99,7 +99,7 @@ def process_load_queue(q):
             #mp.set_start_method('spawn')
             event = q.get()
             pool = Pool(processes=1)
-            pool.apply_async(process_func, (event))
+            pool.apply_async(process_func, (event,))
             ##p = Pool(5)
             #p.map(print_func,(event,))
             #print_func(event)
@@ -137,7 +137,7 @@ if __name__ == '__main__':
     observer.start()
     #pool=Pool(processes = 1)
     #pool.apply_async(process_load_queue, (watchdog_queue,))
-    worker = threading.Thread(target=process_load_queue, args=(watchdog_queue))
+    worker = threading.Thread(target=process_load_queue, args=(watchdog_queue,))
 
     worker.setDaemon(True)
     worker.start()
