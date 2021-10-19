@@ -72,7 +72,7 @@ def process_func(event):
                 if retrieve_hash_file_name == file_name:
                     print("[DIRWATCH] Hash of the file found: ", hashes)
                     print("[DIRWATCH] Writing the hash found to file ...")
-                    with open("/samba/enclave/return_hash/" + retrieve_hash_file_name + "_hash.txt", "w+") as wf:
+                    with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt", "w+") as wf:
                         wf.write(hashes)
                     break
                 else:
