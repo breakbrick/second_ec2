@@ -12,7 +12,7 @@ from watchdog.events import FileSystemEventHandler
 from multiprocessing import Pool
 PROCESSES = mp.cpu_count() - 1
 NUMBER_OF_TASKS = 10
-FILE_PROCESSING = "/samba/enclave/"
+FILE_PROCESSING = "/samba/enclave/monitoring/"
 class FileLoaderWatchdog(FileSystemEventHandler):
     ''' Watches a nominated directory and when a * type  file is
         moved
