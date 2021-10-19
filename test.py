@@ -1,6 +1,5 @@
 import argparse
-import os
-import sys
+from datetime import datetime
 from time import sleep
 
 class GenerateFiles():
@@ -13,30 +12,37 @@ class GenerateFiles():
         self.delay = delay
 
     def generate_files(self):
+        print_with_date_time(" -- " + str(self.num_of_files) + " files to generate ...")
         if self.delay is None:
             if self.action == "HASH_GEN":
                 for i in range(0,self.num_of_files):
-                    print("Generating file_" + str(i+1) + "...")
+                    print_with_date_time(" -- Generating file_" + str(i+1) + ".txt with no delay ...")
                     with open("/samba/enclave/hash_generation/file_" + str(i+1) + ".txt", "w+") as out_file:
                         out_file.write(str(i+1))
             elif self.action == "VERIFY_HASH":
                 for i in range(0,self.num_of_files):
-                    print("Generating file_" + str(i+1) + "...")
+                    print_with_date_time(" -- Generating file_" + str(i+1) + " ...")
                     with open("/samba/enclave/verify_hash/request_hash/file_" + str(i+1) + ".txt", "w+") as out_file:
                         out_file.write(str(i+1))
+            else:
+                print("Unknown process detected!")
         else:
             if self.action == "HASH_GEN":
                 for i in range(0,self.num_of_files):
-                    print("Generating file_" + str(i+1) + "...")
+                    print_with_date_time(" -- Generating file_" + str(i+1) + ".txt with " + str(self.delay) + "s delay ...")
                     with open("/samba/enclave/hash_generation/file_" + str(i+1) + ".txt", "w+") as out_file:
                         out_file.write(str(i+1))
                     sleep(self.delay)
             elif self.action == "VERIFY_HASH":
                 for i in range(0,self.num_of_files):
-                    print("Generating file_" + str(i+1) + "...")
+                    print_with_date_time(" -- Generating file_" + str(i+1) + ".txt with " + str(self.delay) + "s delay ...")
                     with open("/samba/enclave/verify_hash/request_hash/file_" + str(i+1) + ".txt", "w+") as out_file:
                         out_file.write(str(i+1))
                     sleep(self.delay)
+
+def print_with_date_time(message):
+    now = datetime.now()
+    print(str(now.strftime("%d/%m/%Y %H:%M:%S")) + message)
 
 
 if __name__ == '__main__':
