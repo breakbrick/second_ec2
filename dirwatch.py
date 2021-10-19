@@ -47,6 +47,7 @@ def print_func(event):
     print ("{0} -- Pulling {1} off the queue ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.src_path))
     splitted_file_path = event.src_path.split("/")
     action = splitted_file_path[4]
+    # Check if the 5th folder is hash_generation
     if action == "hash_generation":
         # Read the hash value from the shared folder
         with open(event.src_path, "r") as f:
@@ -55,12 +56,12 @@ def print_func(event):
         with open("hash/hashes.txt", "a+") as t:
             t.write(hash_values + "\n")
 
-        print("Removing " + str(event.src_path))
+        print("[DIRWATCH] Removing " + str(event.src_path))
         # Remove the file in the shared folder
         remove(event.src_path)
-    # Check if the 3rd folder is verify_hash
-    elif action == "verify_hash":
-        print("[print func] splitted ", splitted_file_path)
+    # Check if the 5th folder is request_hash
+    elif action == "request_hash":
+        print("[DIRWATCH] splitted ", splitted_file_path)
         # Get the pre-defined filename storing the file_name to hash
         received_file_name = splitted_file_path[5]
         # if received_file_name == "file_name.txt":
@@ -87,6 +88,8 @@ def print_func(event):
                     break
                 else:
                     print("[DIRWATCH] Unable to find the hash value for file " + retrieve_hash_file_name)
+    else:
+        print("[DIRWATCH] Wrong action!")
 
 def info(title):
     print(title)
