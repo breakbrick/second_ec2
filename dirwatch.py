@@ -1,26 +1,20 @@
 import datetime
-import multiprocessing as mp
 import os
 import threading
 import time
-from multiprocessing import Process
 from multiprocessing import Queue
 from os import remove
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 from multiprocessing import Pool
-PROCESSES = mp.cpu_count() - 1
-NUMBER_OF_TASKS = 10
 FILE_PROCESSING = "/samba/enclave/monitoring/"
-class FileLoaderWatchdog(FileSystemEventHandler):
-    ''' Watches a nominated directory and when a * type  file is
-        moved
 
+class FileLoaderWatchdog(FileSystemEventHandler):
+    ''' Watches a directory for creation of file
     '''
 
     def __init__(self, queue):
-       #PatternMatchingEventHandler.__init__(self, patterns=patterns)
        self.queue = queue
 
     def process(self, event):
@@ -41,8 +35,8 @@ class FileLoaderWatchdog(FileSystemEventHandler):
         print ("{0} -- event {1} off the queue ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.src_path))
 
 
-def print_func(event):
-    time.sleep(5)
+def process_func(event):
+    # time.sleep(5)
     now = datetime.datetime.now()
     print ("{0} -- Pulling {1} off the queue ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.src_path))
     splitted_file_path = event.src_path.split("/")
@@ -62,11 +56,6 @@ def print_func(event):
     # Check if the 5th folder is request_hash
     elif action == "request_hash":
         print("[DIRWATCH] splitted ", splitted_file_path)
-        # Get the pre-defined filename storing the file_name to hash
-        received_file_name = splitted_file_path[5]
-        # if received_file_name == "file_name.txt":
-            # print("i need to retrieve hash file")
-            # Open the file and store the file_name inside the file
         with open(event.src_path, "r") as read_dummy_file:
             retrieve_hash_file_name = read_dummy_file.read().rstrip()
         print("[DIRWATCH] The file name to retrieve hash: ", retrieve_hash_file_name)
@@ -110,7 +99,7 @@ def process_load_queue(q):
             #mp.set_start_method('spawn')
             event = q.get()
             pool = Pool(processes=1)
-            pool.apply_async(print_func, (event,))
+            pool.apply_async(process_func, (event))
             ##p = Pool(5)
             #p.map(print_func,(event,))
             #print_func(event)
@@ -141,7 +130,6 @@ if __name__ == '__main__':
 
     # setup watchdog to monitor directory for trigger files
     #args = sys.argv[1:]
-    patt = ["*"]
     # path_watch = "D:\watcher"
     event_handler = FileLoaderWatchdog(watchdog_queue)
     observer = Observer()
@@ -149,7 +137,7 @@ if __name__ == '__main__':
     observer.start()
     #pool=Pool(processes = 1)
     #pool.apply_async(process_load_queue, (watchdog_queue,))
-    worker = threading.Thread(target=process_load_queue, args=(watchdog_queue,))
+    worker = threading.Thread(target=process_load_queue, args=(watchdog_queue))
 
     worker.setDaemon(True)
     worker.start()
