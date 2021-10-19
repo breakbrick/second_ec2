@@ -45,6 +45,8 @@ def print_func(event):
     time.sleep(5)
     now = datetime.datetime.utcnow()
     print ("{0} -- Pulling {1} off the queue ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.src_path))
+    splitted_file_path = event.src_path.split("/")
+    print("[print func] splitted ", splitted_file_path)
 
 def info(title):
     print(title)
@@ -66,7 +68,6 @@ def process_load_queue(q):
             event = q.get()
             pool = Pool(processes=1)
             pool.apply_async(print_func, (event,))
-            print("[process] ", event.src_path)
             ##p = Pool(5)
             #p.map(print_func,(event,))
             #print_func(event)
