@@ -141,6 +141,7 @@ if __name__ == '__main__':
 
     worker.setDaemon(True)
     worker.start()
+    worker.join()
     #p = Pool(2)
     #p.map(observer,watchdog_queue)
 
