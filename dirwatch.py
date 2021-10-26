@@ -64,7 +64,6 @@ def process_func(event):
         remove(event.src_path)
         # Open and read the file storing all hashes
         with open("hash/hashes.txt", "r") as read_hashes:
-            next(read_hashes)
             # Check if the file_name obtained is inside the hash file
             for contents in read_hashes:
                 # print("[DIRWATCH] All contents in file: ", contents)
