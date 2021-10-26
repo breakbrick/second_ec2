@@ -60,8 +60,8 @@ def process_func(event):
             retrieve_hash_file_name = read_dummy_file.read().rstrip()
         print("[DIRWATCH] The file name to retrieve hash: ", retrieve_hash_file_name)
         # Remove the file away
-        print("[DIRWATCH] Removing the filename file ...")
-        remove(event.src_path)
+        # print("[DIRWATCH] Removing the filename file ...")
+        # remove(event.src_path)
         # Open and read the file storing all hashes
         with open("hash/hashes.txt", "r") as read_hashes:
             # Check if the file_name obtained is inside the hash file
