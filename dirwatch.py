@@ -96,9 +96,9 @@ def process_load_queue(q):
     while True:
         if not q.empty():
             event = q.get()
-            # process_func(event)
-            pool = Pool(processes=1, maxtasksperchild=100)
-            pool.apply_async(process_func, (event,))
+            process_func(event)
+            # pool = Pool(processes=1, maxtasksperchild=100)
+            # pool.apply_async(process_func, (event,))
         else:
             time.sleep(1)
 
