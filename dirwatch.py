@@ -98,8 +98,9 @@ def process_load_queue(q):
         if not q.empty():
             #mp.set_start_method('spawn')
             event = q.get()
-            pool = Pool(processes=1)
-            pool.apply_async(process_func, (event,))
+            process_func(event)
+            # pool = Pool(processes=1)
+            # pool.apply_async(process_func, (event,))
             ##p = Pool(5)
             #p.map(print_func,(event,))
             #print_func(event)
@@ -141,7 +142,6 @@ if __name__ == '__main__':
 
     worker.setDaemon(True)
     worker.start()
-    worker.join()
     #p = Pool(2)
     #p.map(observer,watchdog_queue)
 
