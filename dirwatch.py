@@ -95,25 +95,10 @@ def process_load_queue(q):
     '''
     while True:
         if not q.empty():
-            #mp.set_start_method('spawn')
             event = q.get()
-            process_func(event)
-            # pool = Pool(processes=1)
-            # pool.apply_async(process_func, (event,))
-            ##p = Pool(5)
-            #p.map(print_func,(event,))
-            #print_func(event)
-            #info('main line')
-            #procs = []
-            #proc = Process(target=print_func, args=(event,))
-            #procs.append(proc)
-            #proc.start()
-            #for proc in procs:
-             #   proc.join()
-            #print ("{0} -- Pulling {1} off the queue ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.src_path))
-            #time.sleep(5)
-           # now2 = datetime.datetime.utcnow()
-            #print ("{0} -- Replying {1} off the queue ...".format(now2.strftime("%Y/%m/%d %H:%M:%S"), event.src_path))
+            # process_func(event)
+            pool = Pool(processes=1, maxtasksperchild=100)
+            pool.apply_async(process_func, (event,))
         else:
             time.sleep(1)
 
