@@ -65,17 +65,23 @@ def process_func(event):
         # Open and read the file storing all hashes
         with open("hash/hashes.txt", "r") as read_hashes:
             # Check if the file_name obtained is inside the hash file
-            for contents in read_hashes:
-                # print("[DIRWATCH] All contents in file: ", contents)
-                hashes, file_name = contents.strip().split("|",1)
-                if retrieve_hash_file_name == file_name:
-                    print("[DIRWATCH] Hash of the file found: ", hashes)
-                    print("[DIRWATCH] Writing the hash found to file ...")
-                    with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt", "w+") as wf:
-                        wf.write(hashes)
-                    break
-                else:
-                    print("[DIRWATCH] Unable to find the hash value for file " + retrieve_hash_file_name)
+            line = next((l for l in read_hashes if retrieve_hash_file_name in l), None)
+            if line == None:
+                print("[DIRWATCH] Unable to find the hash value for file " + retrieve_hash_file_name)
+            else:
+                with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt", "w+") as wf:
+                    wf.write(line[:64])
+            # for contents in read_hashes:
+            #     # print("[DIRWATCH] All contents in file: ", contents)
+            #     hashes, file_name = contents.strip().split("|",1)
+            #     if retrieve_hash_file_name == file_name:
+            #         print("[DIRWATCH] Hash of the file found: ", hashes)
+            #         print("[DIRWATCH] Writing the hash found to file ...")
+            #         with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt", "w+") as wf:
+            #             wf.write(hashes)
+            #         break
+            #     else:
+            #         print("[DIRWATCH] Unable to find the hash value for file " + retrieve_hash_file_name)
     else:
         print("[DIRWATCH] Wrong action!")
 
