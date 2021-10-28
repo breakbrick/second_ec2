@@ -70,6 +70,7 @@ def process_func(event):
                 print("[DIRWATCH] Unable to find the hash value for file " + retrieve_hash_file_name)
             else:
                 print("Hash for " + retrieve_hash_file_name + ": " + str(line[:64]))
+                print("Writing to file at: " + "/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt")
                 with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt", "w+") as wf:
                     wf.write(line[:64])
             # for contents in read_hashes:
