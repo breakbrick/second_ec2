@@ -58,21 +58,24 @@ def process_func(event):
         print("[DIRWATCH] splitted ", splitted_file_path)
         with open(event.src_path, "r") as read_dummy_file:
             retrieve_hash_file_name = read_dummy_file.read().rstrip()
-        print("[DIRWATCH] The file name to retrieve hash: ", retrieve_hash_file_name)
-        # Remove the file away
-        # print("[DIRWATCH] Removing the filename file ...")
-        # remove(event.src_path)
-        # Open and read the file storing all hashes
-        with open("hash/hashes.txt", "r") as read_hashes:
-            # Check if the file_name obtained is inside the hash file
-            line = next((l for l in read_hashes if retrieve_hash_file_name in l), None)
-            if line == None:
-                print("[DIRWATCH] Unable to find the hash value for file " + retrieve_hash_file_name)
-            else:
-                print("Hash for " + retrieve_hash_file_name + ": " + str(line[:64]))
-                print("Writing to file at: " + "/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt")
-                with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt", "w+") as wf:
-                    wf.write(line[:64])
+        if retrieve_hash_file_name == "":
+            pass
+        else:
+            print("[DIRWATCH] The file name to retrieve hash: ", retrieve_hash_file_name)
+            # Remove the file away
+            # print("[DIRWATCH] Removing the filename file ...")
+            # remove(event.src_path)
+            # Open and read the file storing all hashes
+            with open("hash/hashes.txt", "r") as read_hashes:
+                # Check if the file_name obtained is inside the hash file
+                line = next((l for l in read_hashes if retrieve_hash_file_name in l), None)
+                if line == None:
+                    print("[DIRWATCH] Unable to find the hash value for file " + retrieve_hash_file_name)
+                else:
+                    print("Hash for " + retrieve_hash_file_name + ": " + str(line[:64]))
+                    print("Writing to file at: " + "/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt")
+                    with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt", "w+") as wf:
+                        wf.write(line[:64])
             # for contents in read_hashes:
             #     # print("[DIRWATCH] All contents in file: ", contents)
             #     hashes, file_name = contents.strip().split("|",1)
