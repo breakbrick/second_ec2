@@ -57,9 +57,9 @@ def process_func(event):
     elif action == "request_hash":
         print("[DIRWATCH] splitted ", splitted_file_path)
         with open(event.src_path, "r") as read_dummy_file:
-            retrieve_hash_file_name = read_dummy_file.read().rstrip()
+            retrieve_hash_file_name = read_dummy_file.read()
         if retrieve_hash_file_name == "":
-            pass
+            print("[DIRWATCH] Empty???????????????????????????")
         else:
             print("[DIRWATCH] The file name to retrieve hash: ", retrieve_hash_file_name)
             # Remove the file away
