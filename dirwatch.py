@@ -75,7 +75,8 @@ def process_func(event):
                     print("Hash for " + retrieve_hash_file_name + ": " + str(line[:64]))
                     print("Writing to file at: " + "/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt")
                     with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt", "w+") as wf:
-                        wf.write(line[:64])
+                        # wf.write(line[:64])
+                        wf.write(line)
             # for contents in read_hashes:
             #     # print("[DIRWATCH] All contents in file: ", contents)
             #     hashes, file_name = contents.strip().split("|",1)
