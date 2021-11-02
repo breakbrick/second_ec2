@@ -137,7 +137,7 @@ if __name__ == '__main__':
     #pool.apply_async(process_load_queue, (watchdog_queue,))
     worker = threading.Thread(target=process_load_queue, args=(watchdog_queue,))
 
-    worker.setDaemon(True)
+    # worker.setDaemon(True)
     worker.start()
     #p = Pool(2)
     #p.map(observer,watchdog_queue)
