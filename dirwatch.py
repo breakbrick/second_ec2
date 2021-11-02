@@ -4,6 +4,7 @@ import threading
 import time
 from multiprocessing import Queue
 from os import remove
+from time import sleep
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
@@ -77,17 +78,7 @@ def process_func(event):
                     with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt", "w+") as wf:
                         # wf.write(line[:64])
                         wf.write(line)
-            # for contents in read_hashes:
-            #     # print("[DIRWATCH] All contents in file: ", contents)
-            #     hashes, file_name = contents.strip().split("|",1)
-            #     if retrieve_hash_file_name == file_name:
-            #         print("[DIRWATCH] Hash of the file found: ", hashes)
-            #         print("[DIRWATCH] Writing the hash found to file ...")
-            #         with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt", "w+") as wf:
-            #             wf.write(hashes)
-            #         break
-            #     else:
-            #         print("[DIRWATCH] Unable to find the hash value for file " + retrieve_hash_file_name)
+                    sleep(0.5)
     else:
         print("[DIRWATCH] Wrong action!")
 
