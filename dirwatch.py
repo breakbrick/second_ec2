@@ -109,9 +109,9 @@ def process_load_queue(q):
         if not q.empty():
             event = q.get()
             process_func(event)
-            # pool = Pool(processes=1, maxtasksperchild=100)
-            # pool.apply_async(process_func, (event,))
-            # pool.close()
+            pool = Pool(processes=1, maxtasksperchild=100)
+            pool.apply_async(process_func, (event,))
+            pool.close()
         else:
             time.sleep(1)
 
@@ -127,8 +127,7 @@ if __name__ == '__main__':
 
 
     # setup watchdog to monitor directory for trigger files
-    #args = sys.argv[1:]
-    # path_watch = "D:\watcher"
+
     event_handler = FileLoaderWatchdog(watchdog_queue)
     observer = Observer()
     observer.schedule(event_handler, path=FILE_PROCESSING, recursive=True)
@@ -137,7 +136,7 @@ if __name__ == '__main__':
     #pool.apply_async(process_load_queue, (watchdog_queue,))
     worker = threading.Thread(target=process_load_queue, args=(watchdog_queue,))
 
-    # worker.setDaemon(True)
+    worker.setDaemon(True)
     worker.start()
     #p = Pool(2)
     #p.map(observer,watchdog_queue)
