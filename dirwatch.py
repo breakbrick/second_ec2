@@ -7,6 +7,7 @@ from os import remove
 from time import sleep
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+from check import check_hash_is_written
 
 from multiprocessing import Pool
 FILE_PROCESSING = "/samba/enclave/monitoring/"
@@ -37,7 +38,6 @@ class FileLoaderWatchdog(FileSystemEventHandler):
 
 
 def process_func(event):
-    # time.sleep(3)
     now = datetime.datetime.now()
     print ("{0} -- Pulling {1} off the queue ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.src_path))
     splitted_file_path = event.src_path.split("/")
@@ -50,6 +50,8 @@ def process_func(event):
         # Write the hash value to another folder
         with open("hash/hashes.txt", "a+") as t:
             t.write(hash_values + "\n")
+
+        check_hash_is_written(hash_values)
 
         print("[DIRWATCH] Removing " + str(event.src_path))
         # Remove the file in the shared folder
