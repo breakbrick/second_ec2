@@ -45,23 +45,22 @@ def process_func(event):
     action = splitted_file_path[4]
     # Check if the 5th folder is hash_generation
     if action == "hash_generation":
-        if stat(event.src_path).st_size == 0:
-            print(">>>>>>>>>>>>>>> " + str(event.src_path) + " is empty!")
-            with open("zzz.txt", "w+") as wf:
-                wf.write(">>>>>>>>>>>>>>> " + str(event.src_path) + " is empty!")
-            pass
-        else:
-            # Read the hash value from the shared folder
-            with open(event.src_path, "r") as f:
-                hash_values = f.read()
-            
-            # Write the hash value to another folder
-            with open("hash/hashes.txt", "a+") as t:
-                t.write(hash_values + "\n")
-                # t.write(" \n") # Test check on missing hash values
+        # if stat(event.src_path).st_size == 0:
+        #     print(">>>>>>>>>>>>>>> " + str(event.src_path) + " is empty!")
+        #     with open("zzz.txt", "w+") as wf:
+        #         wf.write(">>>>>>>>>>>>>>> " + str(event.src_path) + " is empty!")
+        #     pass
+        # else:
+        # Read the hash value from the shared folder
+        with open(event.src_path, "r") as f:
+            hash_values = f.read()
+        
+        # Write the hash value to another folder
+        with open("hash/hashes.txt", "a+") as t:
+            t.write(hash_values + "\n")
+            # t.write(" \n") # Test check on missing hash values
 
-            # check_hash_is_written(hash_values, event.src_path)
-
+        if check_hash_is_written(hash_values, event.src_path):
             print("[DIRWATCH] Removing " + str(event.src_path))
             # Remove the file in the shared folder
             remove(event.src_path)
