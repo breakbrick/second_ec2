@@ -50,7 +50,8 @@ def process_func(event):
             print("hash value: " + hash_values)
             if hash_values == " " or hash_values == "":
                 print(event.src_path)
-                sleep(10)
+                # sleep(10)
+                exit
         # Write the hash value to another folder
         with open("hash/hashes.txt", "a+") as t:
             t.write(hash_values + "\n")
@@ -58,9 +59,9 @@ def process_func(event):
 
         # check_hash_is_written(hash_values, event.src_path)
 
-        print("[DIRWATCH] Removing " + str(event.src_path))
+        # print("[DIRWATCH] Removing " + str(event.src_path))
         # # Remove the file in the shared folder
-        remove(event.src_path)
+        # remove(event.src_path)
     # Check if the 5th folder is request_hash
     elif action == "request_hash":
         print("[DIRWATCH] splitted ", splitted_file_path)
