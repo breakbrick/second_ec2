@@ -60,7 +60,7 @@ def process_func(event):
             t.write(hash_values + "\n")
             # t.write(" \n") # Test check on missing hash values
 
-        if check_hash_is_written(hash_values, event.src_path):
+        if check_hash_is_written(event.src_path):
             print("[DIRWATCH] Removing " + str(event.src_path))
             # Remove the file in the shared folder
             remove(event.src_path)

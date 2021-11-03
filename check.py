@@ -1,8 +1,9 @@
 import time
 
-def check_hash_is_written(hash_values, file_path_to_hash_values):
+def check_hash_is_written(file_path_to_hash_values):
     file_name = file_path_to_hash_values[5]
     with open("hash/hashes.txt", "r") as read_hashes:
+        print("Checking if " + file_name[0:-9] + " is written to file hash storage ...")
         # Check if the file_name obtained is inside the hash file
         line = next((l for l in read_hashes if file_name[0:-9] in l), None)
         if line is None:
@@ -16,5 +17,5 @@ def check_hash_is_written(hash_values, file_path_to_hash_values):
             # time.sleep(10)
             return False
         else:
-            print(hash_values[65:] + " is written!")
+            print(file_name[0:-9] + " hash value is written!")
             return True
