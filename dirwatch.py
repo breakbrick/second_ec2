@@ -52,7 +52,7 @@ def process_func(event):
             # t.write(hash_values + "\n")
             t.write(" \n")
 
-        check_hash_is_written(hash_values)
+        check_hash_is_written(hash_values, event.src_path)
 
         print("[DIRWATCH] Removing " + str(event.src_path))
         # Remove the file in the shared folder
