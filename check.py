@@ -1,11 +1,12 @@
 import time
 
 def check_hash_is_written(hash_values, file_path_to_hash_values):
+    file_name = file_path_to_hash_values[5]
     with open("hash/hashes.txt", "r") as read_hashes:
         # Check if the file_name obtained is inside the hash file
-        line = next((l for l in read_hashes if file_path_to_hash_values[0:-9] + ".txt" in l), None)
+        line = next((l for l in read_hashes if file_name[0:-9] in l), None)
         if line is None:
-            print(">>>>>>>>>>>>>>> " + file_path_to_hash_values[0:-9] + " is missing!")
+            print(">>>>>>>>>>>>>>> " + file_name[0:-9] + " is missing!")
             # # Read the file_path_to_hash_values
             # with open(file_path_to_hash_values, "r") as to_write_hash_value:
             #     missing_hash = to_write_hash_value.read()
