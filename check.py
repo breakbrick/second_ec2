@@ -1,3 +1,5 @@
+import time
+
 def check_hash_is_written(hash_values, file_path_to_hash_values):
     with open("hash/hashes.txt", "r") as read_hashes:
         # Check if the file_name obtained is inside the hash file
@@ -10,5 +12,6 @@ def check_hash_is_written(hash_values, file_path_to_hash_values):
             # Write the missing hash values to file
             with open("hash/hashes.txt", "a+") as write_hashes:
                 write_hashes.write(missing_hash + "\n")
+            time.sleep(10)
         else:
             print(hash_values[65:] + " is written!")
