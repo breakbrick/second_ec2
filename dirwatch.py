@@ -78,7 +78,7 @@ def process_func(event):
                     with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt", "w+") as wf:
                         # wf.write(line[:64])
                         wf.write(line)
-                    sleep(0.5)
+
     else:
         print("[DIRWATCH] Wrong action!")
 
