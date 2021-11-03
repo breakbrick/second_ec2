@@ -47,7 +47,8 @@ def process_func(event):
         # Read the hash value from the shared folder
         with open(event.src_path, "r") as f:
             hash_values = f.read()
-            if hash_values == " ":
+            print("hash value: " + hash_values)
+            if hash_values == " " or hash_values == "":
                 print(event.src_path)
                 sleep(10)
         # Write the hash value to another folder
