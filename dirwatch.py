@@ -45,8 +45,8 @@ def process_func(event):
     action = splitted_file_path[4]
     # Check if the 5th folder is hash_generation
     if action == "hash_generation":
-
         if stat(event.src_path).st_size == 0:
+            print(">>>>>>>>>>>>>>> " + str(event.src_path) + " is empty!")
             pass
         else:
             # Read the hash value from the shared folder
