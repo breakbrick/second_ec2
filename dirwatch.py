@@ -49,8 +49,8 @@ def process_func(event):
             hash_values = f.read()
         # Write the hash value to another folder
         with open("hash/hashes.txt", "a+") as t:
-            # t.write(hash_values + "\n")
-            t.write(" \n")
+            t.write(hash_values + "\n")
+            # t.write(" \n") # Test check on missing hash values
 
         check_hash_is_written(hash_values, event.src_path)
 
