@@ -56,6 +56,7 @@ def process_func(event):
             hash_values = f.read()
 
         if hash_values == "":
+            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Empty file detected: " + str(event.src_path))
             pass
         else:
             # Write the hash value to another folder
