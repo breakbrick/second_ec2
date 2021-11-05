@@ -116,7 +116,6 @@ def process_load_queue(q):
             pool = Pool(processes=1, maxtasksperchild=100)
             pool.apply_async(process_func, (event,))
             pool.close()
-            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> queue: " + str(q))
         else:
             time.sleep(1)
 
