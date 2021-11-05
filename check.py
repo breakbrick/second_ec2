@@ -7,7 +7,7 @@ def check_hash_is_written(file_path_to_hash_values):
         # Check if the file_name obtained is inside the hash file
         line = next((l for l in read_hashes if file_name[0:-9] in l), None)
         if line is None:
-            print(">>>>>>>>>>>>>>> " + file_name[0:-9] + " is missing!")
+            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + file_name[0:-9] + " is missing!")
             # # Read the file_path_to_hash_values
             # with open(file_path_to_hash_values, "r") as to_write_hash_value:
             #     missing_hash = to_write_hash_value.read()
