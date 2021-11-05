@@ -55,19 +55,18 @@ def process_func(event):
         with open(event.src_path, "r") as f:
             hash_values = f.read()
 
-        while hash_values == "":
+        if hash_values == "":
             print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Empty file detected: " + str(event.src_path))
-            pass
-        # else:
-        # Write the hash value to another folder
-        with open("hash/hashes.txt", "a+") as t:
-            t.write(hash_values + "\n")
-            # t.write(" \n") # Test check on missing hash values
+        else:
+            # Write the hash value to another folder
+            with open("hash/hashes.txt", "a+") as t:
+                t.write(hash_values + "\n")
+                # t.write(" \n") # Test check on missing hash values
 
-        if check_hash_is_written(event.src_path):
-            print("[DIRWATCH] Removing " + str(event.src_path))
-            # Remove the file in the shared folder
-            remove(event.src_path)
+            if check_hash_is_written(event.src_path):
+                print("[DIRWATCH] Removing " + str(event.src_path))
+                # Remove the file in the shared folder
+                remove(event.src_path)
     # Check if the 5th folder is request_hash
     elif action == "request_hash":
         print("[DIRWATCH] splitted ", splitted_file_path)
@@ -117,6 +116,7 @@ def process_load_queue(q):
             pool = Pool(processes=1, maxtasksperchild=100)
             pool.apply_async(process_func, (event,))
             pool.close()
+            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> queue: " + str(q))
         else:
             time.sleep(1)
 
