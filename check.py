@@ -1,5 +1,3 @@
-import time
-
 def check_hash_is_written(file_path_to_hash_values):
     print(file_path_to_hash_values)
     file_name = file_path_to_hash_values.split("/")[5]
