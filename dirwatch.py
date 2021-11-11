@@ -20,7 +20,7 @@ class FileLoaderWatchdog(FileSystemEventHandler):
         # self.process(event)
         now = datetime.datetime.now()
         #print(f"hey for {event.src_path}")
-        print ("\n{0} -- event {1} off the queue ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.src_path))
+        print ("\n{0} -- event {1} off the queue ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.dst_path))
 
 
 def process_func(event):
