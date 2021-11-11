@@ -31,7 +31,7 @@ class FileLoaderWatchdog(FileSystemEventHandler):
         '''
         self.queue.put(event)
 
-    def on_created(self, event):
+    def on_moved(self, event):
         self.process(event)
         now = datetime.datetime.now()
         #print(f"hey for {event.src_path}")
