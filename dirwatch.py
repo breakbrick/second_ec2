@@ -133,9 +133,9 @@ if __name__ == '__main__':
 
 
     #asyncio.run(main())
-    # try:
-    #     while True:
-    #         time.sleep(2)
-    # except KeyboardInterrupt:
-    #     observer.stop()
-    # observer.join()
+    try:
+        while True:
+            time.sleep(2)
+    except KeyboardInterrupt:
+        observer.stop()
+    observer.join()
