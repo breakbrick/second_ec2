@@ -117,7 +117,7 @@ if __name__ == '__main__':
 
     # setup watchdog to monitor directory for trigger files
 
-    event_handler = FileLoaderWatchdog(watchdog_queue)
+    event_handler = FileLoaderWatchdog()
     observer = Observer()
     observer.schedule(event_handler, path=FILE_PROCESSING, recursive=True)
     observer.start()
