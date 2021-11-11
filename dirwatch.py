@@ -16,23 +16,8 @@ FILE_PROCESSING = "/samba/enclave/monitoring/"
 class FileLoaderWatchdog(FileSystemEventHandler):
     ''' Watches a directory for creation of file
     '''
-
-    def __init__(self, queue):
-       self.queue = queue
-
-    def process(self, event):
-        '''
-        event.event_type
-            'modified' | 'created' | 'moved' | 'deleted'
-        event.is_directory
-            True | False
-        event.src_path
-            path/to/observed/file
-        '''
-        self.queue.put(event)
-
     def on_moved(self, event):
-        self.process(event)
+        # self.process(event)
         now = datetime.datetime.now()
         #print(f"hey for {event.src_path}")
         print ("\n{0} -- event {1} off the queue ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.src_path))
@@ -138,18 +123,18 @@ if __name__ == '__main__':
     observer.start()
     #pool=Pool(processes = 1)
     #pool.apply_async(process_load_queue, (watchdog_queue,))
-    worker = threading.Thread(target=process_load_queue, args=(watchdog_queue,))
+    # worker = threading.Thread(target=process_load_queue, args=(watchdog_queue,))
 
-    worker.setDaemon(True)
-    worker.start()
+    # worker.setDaemon(True)
+    # worker.start()
     #p = Pool(2)
     #p.map(observer,watchdog_queue)
 
 
     #asyncio.run(main())
-    try:
-        while True:
-            time.sleep(2)
-    except KeyboardInterrupt:
-        observer.stop()
-    observer.join()
+    # try:
+    #     while True:
+    #         time.sleep(2)
+    # except KeyboardInterrupt:
+    #     observer.stop()
+    # observer.join()
