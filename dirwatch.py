@@ -7,7 +7,7 @@ from os import remove
 from os import stat
 from time import sleep
 from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
+from watchdog.events import FileSystemEventHandler, LoggingEventHandler
 from check import check_hash_is_written
 
 from multiprocessing import Pool
@@ -18,6 +18,7 @@ class FileLoaderWatchdog(FileSystemEventHandler):
     '''
     def on_moved(self, event):
         # self.process(event)
+        super(LoggingEventHandler, self).on_moved(event)
         now = datetime.datetime.now()
         #print(f"hey for {event.src_path}")
         print ("\n{0} -- event {1} off the queue ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.src_path))
