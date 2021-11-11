@@ -75,10 +75,10 @@ if __name__ == '__main__':
                         else:
                             print("Hash for " + retrieve_hash_file_name + ": " + str(line[:64]))
                             print("Writing to file at: " + "/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt")
-                            with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt.tmp", "w+") as wf:
+                            with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt", "w+") as wf:
                                 # wf.write(line[:64])
                                 wf.write(line)
-                            rename("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt.tmp", "/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt")
+                            # rename("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt.tmp", "/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt")
                 else:
                     print("[DIRWATCH] Wrong action!")
     except KeyboardInterrupt:
