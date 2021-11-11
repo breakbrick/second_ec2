@@ -4,6 +4,7 @@ import threading
 import time
 from multiprocessing import Queue
 from os import remove
+from os import rename
 from os import stat
 from time import sleep
 from watchdog.observers import Observer
@@ -23,59 +24,6 @@ class FileLoaderWatchdog(FileSystemEventHandler):
         #print(f"hey for {event.src_path}")
         print ("\n{0} -- Event type {1}: {2} renamed to {3} ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.event_type, event.src_path, event.dest_path))
         pending_queue.append(event.dest_path)
-
-
-def process_func(event):
-    now = datetime.datetime.now()
-    print ("{0} -- Pulling {1} off the queue ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.dest_path))
-    splitted_file_path = event.dest_path.split("/")
-    action = splitted_file_path[4]
-    # Check if the 5th folder is hash_generation
-    if action == "hash_generation":
-        # Read the hash value from the shared folder
-        with open(event.dest_path, "r") as f:
-            hash_values = f.read()
-
-        # Check if the file content is empty
-        if hash_values == "":
-            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Empty file detected: " + str(event.dest_path))
-        else:
-            # Write the hash value to another folder
-            with open("hash/hashes.txt", "a+") as t:
-                t.write(hash_values + "\n")
-                # t.write(" \n") # Test check on missing hash values
-
-            if check_hash_is_written(event.dest_path):
-                print("[DIRWATCH] Removing " + str(event.dest_path))
-                # Remove the file in the shared folder
-                remove(event.dest_path)
-    # Check if the 5th folder is request_hash
-    elif action == "request_hash":
-        print("[DIRWATCH] splitted ", splitted_file_path)
-        with open(event.dest_path, "r") as read_dummy_file:
-            retrieve_hash_file_name = read_dummy_file.read()
-        if retrieve_hash_file_name == "":
-            print("[DIRWATCH] Empty???????????????????????????")
-        else:
-            print("[DIRWATCH] The file name to retrieve hash: ", retrieve_hash_file_name)
-            # Remove the file away
-            print("[DIRWATCH] Removing the filename file ...")
-            remove(event.dest_path)
-            # Open and read the file storing all hashes
-            with open("hash/hashes.txt", "r") as read_hashes:
-                # Check if the file_name obtained is inside the hash file
-                line = next((l for l in read_hashes if retrieve_hash_file_name in l), None)
-                if line == None:
-                    print("[DIRWATCH] Unable to find the hash value for file " + retrieve_hash_file_name)
-                else:
-                    print("Hash for " + retrieve_hash_file_name + ": " + str(line[:64]))
-                    print("Writing to file at: " + "/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt")
-                    with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt", "w+") as wf:
-                        # wf.write(line[:64])
-                        wf.write(line)
-
-    else:
-        print("[DIRWATCH] Wrong action!")
 
 
 if __name__ == '__main__':
@@ -113,25 +61,24 @@ if __name__ == '__main__':
                     print("[DIRWATCH] splitted ", splitted_file_path)
                     with open(file_path, "r") as read_dummy_file:
                         retrieve_hash_file_name = read_dummy_file.read()
-                    if retrieve_hash_file_name == "":
-                        print("[DIRWATCH] Empty???????????????????????????")
-                    else:
-                        print("[DIRWATCH] The file name to retrieve hash: ", retrieve_hash_file_name)
-                        # Remove the file away
-                        print("[DIRWATCH] Removing the filename file ...")
-                        remove(file_path)
-                        # Open and read the file storing all hashes
-                        with open("hash/hashes.txt", "r") as read_hashes:
-                            # Check if the file_name obtained is inside the hash file
-                            line = next((l for l in read_hashes if retrieve_hash_file_name in l), None)
-                            if line == None:
-                                print("[DIRWATCH] Unable to find the hash value for file " + retrieve_hash_file_name)
-                            else:
-                                print("Hash for " + retrieve_hash_file_name + ": " + str(line[:64]))
-                                print("Writing to file at: " + "/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt")
-                                with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt", "w+") as wf:
-                                    # wf.write(line[:64])
-                                    wf.write(line)
+                    
+                    print("[DIRWATCH] The file name to retrieve hash: ", retrieve_hash_file_name)
+                    # Remove the file away
+                    print("[DIRWATCH] Removing the filename file ...")
+                    remove(file_path)
+                    # Open and read the file storing all hashes
+                    with open("hash/hashes.txt", "r") as read_hashes:
+                        # Check if the file_name obtained is inside the hash file
+                        line = next((l for l in read_hashes if retrieve_hash_file_name in l), None)
+                        if line == None:
+                            print("[DIRWATCH] Unable to find the hash value for file " + retrieve_hash_file_name)
+                        else:
+                            print("Hash for " + retrieve_hash_file_name + ": " + str(line[:64]))
+                            print("Writing to file at: " + "/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt")
+                            with open("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt.tmp", "w+") as wf:
+                                # wf.write(line[:64])
+                                wf.write(line)
+                            rename("/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt.tmp", "/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt")
                 else:
                     print("[DIRWATCH] Wrong action!")
     except KeyboardInterrupt:
