@@ -72,6 +72,8 @@ if __name__ == '__main__':
                         line = next((l for l in read_hashes if retrieve_hash_file_name in l), None)
                         if line == None:
                             print("[DIRWATCH] Unable to find the hash value for file " + retrieve_hash_file_name)
+                            with open("/samba/enclave/no_hash/" + retrieve_hash_file_name, "w+") as write_no_hash:
+                                write_no_hash.write("No hash found for: " + retrieve_hash_file_name)
                         else:
                             print("Hash for " + retrieve_hash_file_name + ": " + str(line[:64]))
                             print("Writing to file at: " + "/samba/enclave/return_hash/" + retrieve_hash_file_name.split(".")[0] + "_hash.txt")
