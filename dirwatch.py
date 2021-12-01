@@ -22,7 +22,7 @@ class FileLoaderWatchdog(FileSystemEventHandler):
         # self.process(event)
         now = datetime.datetime.now()
         #print(f"hey for {event.src_path}")
-        # print ("\n{0} -- Event type {1}: {2} renamed to {3} ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.event_type, event.src_path, event.dest_path))
+        print ("\n{0} -- Event type {1}: {2} renamed to {3} ...".format(now.strftime("%Y/%m/%d %H:%M:%S"), event.event_type, event.src_path, event.dest_path))
         pending_queue.append(event.dest_path)
 
 
